@@ -70,3 +70,21 @@ export const friends = [
       'Drove the coast road with no plan and too little petrol. Slept in the car once. Watched the fog come in over the water and decided some detours are the point.',
   },
 ]
+
+// Connections who are in your circle but didn't write in this week — so the
+// connections list is fuller than the issue (honest sparseness: not everyone
+// publishes every week).
+export const moreConnections = [
+  { id: 'imogen', name: 'Imogen Vale' },
+  { id: 'caleb', name: 'Caleb North' },
+  { id: 'priya', name: 'Priya Anand' },
+  { id: 'marlowe', name: 'Marlowe Quinn' },
+  { id: 'dieter', name: 'Dieter Voss' },
+  { id: 'saoirse', name: 'Saoirse Lynch' },
+]
+
+// Pending inbound requests — someone wants to connect (you accept or decline).
+export const incomingRequests = [
+  { id: 'rafael', name: 'Rafael Ortiz' },
+  { id: 'hana', name: 'Hana Kim' },
+]

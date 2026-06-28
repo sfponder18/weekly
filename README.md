@@ -11,8 +11,9 @@ This repository is an **interactive prototype** for closed beta — a single-dev
 - **Read this week's issue** — a pre-seeded sample circle, so it feels alive the moment you open it. Tap any photo to view it full screen.
 - **Compose your week** — add up to three photos (reorder or remove them) and a short note. It auto-saves as you go; there's no submit button. *Preview my spread* shows exactly how your week will appear in print.
 - **Write a letter** — from any spread, write that person a short note. In the real product it would arrive with their next issue; here it's saved locally and the spread shows it's "on its way."
+- **Your people & settings** — the button in the top corner opens your connections list (the 150-spot cap surfaced, invite by link or name, accept inbound requests, and remove with the real "no longer a connection" notice) and settings (display name, delivery day, the three allowed notification types, and the hashed-contact privacy copy). Removing someone takes them out of your issue immediately.
 
-Two modes, switched from the bar at the bottom — *This week's issue* (reading) and *Your week* (composing). That's the whole app, by design.
+Two content modes, switched from the bar at the bottom — *This week's issue* (reading) and *Your week* (composing) — plus a quiet account area behind the top-corner button. That's the whole app, by design.
 
 ## Install it (beta testers)
 
@@ -37,4 +38,4 @@ npm run preview  # preview the production build
 
 ## Prototype scope
 
-This is the **core loop only** (read · compose · letters), built to validate the feel of the concept. It is deliberately *not* the full product in [the spec](spec.md): there are no real accounts, connections, the 150-connection cap, reciprocity/grace rules, notifications, or the printed-paper pipeline. Because GitHub Pages is static hosting, true multi-user sync (real connections across different people's devices) would require the Django/Postgres backend described in the spec.
+This prototype covers the core loop (read · compose · letters) plus a local **connections** list and **settings** area, built to validate the feel of the concept. It is deliberately *not* the full product in [the spec](spec.md): connections, the 150-cap, invites and removals all work *on your device only* — there are no real accounts, and no reciprocity/grace engine, scheduled push notifications, or printed-paper pipeline. Because GitHub Pages is static hosting, true multi-user sync (connections that span different people's devices) would require the Django/Postgres backend described in the spec.

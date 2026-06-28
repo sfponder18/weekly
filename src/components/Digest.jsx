@@ -43,25 +43,31 @@ export default function Digest({ friends, sentTo, onOpenPhoto, onWrite }) {
         </p>
       </section>
 
-      <section className="toc">
-        <div className="section-label">In this issue</div>
-        <ul className="toc-list">
-          {tocVisible.map((f, i) => (
-            <li key={f.id}>
-              <span className="name">{f.name}</span>
-              <span className="dots" />
-              <span className="pg">{pad(i + 1)}</span>
-            </li>
-          ))}
-          {remaining > 0 && (
-            <li className="muted">
-              <span className="name">…and {remaining} more</span>
-              <span className="dots" />
-              <span className="pg">{pad(tocVisible.length + 1)}+</span>
-            </li>
-          )}
-        </ul>
-      </section>
+      {count > 0 && (
+        <section className="toc">
+          <div className="section-label">In this issue</div>
+          <ul className="toc-list">
+            {tocVisible.map((f, i) => (
+              <li key={f.id}>
+                <span className="name">{f.name}</span>
+                <span className="dots" />
+                <span className="pg">{pad(i + 1)}</span>
+              </li>
+            ))}
+            {remaining > 0 && (
+              <li className="muted">
+                <span className="name">…and {remaining} more</span>
+                <span className="dots" />
+                <span className="pg">{pad(tocVisible.length + 1)}+</span>
+              </li>
+            )}
+          </ul>
+        </section>
+      )}
+
+      {count === 0 && (
+        <div className="empty-hint">A still week.<br />No one has written in yet — your issue fills as your people do.</div>
+      )}
 
       {friends.map((f) => (
         <Spread

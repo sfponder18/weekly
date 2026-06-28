@@ -2,16 +2,16 @@ import { useRef, useState, useEffect } from 'react'
 import { fileToThumb } from '../image.js'
 
 const CAP = 280
+const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-// Time until "Sunday at midnight" — i.e. the next Monday 00:00 local.
-function timeToClose(now) {
+// Time until the week locks — the start (00:00) of the chosen delivery day.
+function timeToClose(now, deliveryDay) {
   const close = new Date(now)
-  const day = now.getDay() // 0 Sun … 6 Sat
-  const daysUntilMonday = (8 - day) % 7 || 7
-  close.setDate(now.getDate() + daysUntilMonday)
+  let diff = (deliveryDay - now.getDay() + 7) % 7
+  if (diff === 0) diff = 7 // if today is delivery day, the week just delivered — count to next
+  close.setDate(now.getDate() + diff)
   close.setHours(0, 0, 0, 0)
-  const ms = close - now
-  const mins = Math.max(0, Math.floor(ms / 60000))
+  const mins = Math.max(0, Math.floor((close - now) / 60000))
   const d = Math.floor(mins / 1440)
   const h = Math.floor((mins % 1440) / 60)
   const m = mins % 60
@@ -20,7 +20,7 @@ function timeToClose(now) {
   return `${m}m`
 }
 
-export default function Compose({ draft, profile, onDraft, onProfile, onPreview, onReset }) {
+export default function Compose({ draft, profile, onDraft, onProfile, onPreview }) {
   const fileRef = useRef(null)
   const [busy, setBusy] = useState(false)
   const [now, setNow] = useState(() => new Date())
@@ -33,6 +33,7 @@ export default function Compose({ draft, profile, onDraft, onProfile, onPreview,
   const photos = draft.photos || []
   const desc = draft.description || ''
   const remaining = CAP - desc.length
+  const deliveryDay = profile.deliveryDay ?? 0
 
   async function onPick(e) {
     const files = Array.from(e.target.files || [])
@@ -124,12 +125,11 @@ export default function Compose({ draft, profile, onDraft, onProfile, onPreview,
 
       <div className="closes">
         <div className="kicker">The week closes in</div>
-        <div className="count">{timeToClose(now)}</div>
-        <div className="sub">Sunday at midnight, your week locks and goes to print.</div>
+        <div className="count">{timeToClose(now, deliveryDay)}</div>
+        <div className="sub">Your {DAYS[deliveryDay]} issue locks and goes to print.</div>
       </div>
 
       <button className="btn" onClick={onPreview}>Preview my spread</button>
-      <button className="reset-link" onClick={onReset}>Reset this demo</button>
     </div>
   )
 }

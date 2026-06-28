@@ -1,11 +1,16 @@
 // Local, single-device persistence. Everything the tester creates — their draft
-// week and the letters they write — lives in localStorage. No backend.
+// week, the letters they write, and their connection/settings choices — lives in
+// localStorage. No backend.
 const KEY = 'weekly:v1'
 
 const empty = {
-  profile: { name: '' },
+  profile: { name: '', deliveryDay: 0, timezone: '', phone: '', remindersOn: true }, // deliveryDay: 0=Sun … 6=Sat
   draft: { photos: [], description: '' }, // photos: array of data-URL strings
   sentLetters: [], // { id, toId, toName, body, at }
+  removedIds: [], // connections the user has removed
+  acceptedIds: [], // inbound requests the user accepted
+  declinedIds: [], // inbound requests the user declined
+  invited: [], // outgoing pending invites: { id, name }
 }
 
 export function load() {
@@ -20,6 +25,10 @@ export function load() {
       profile: { ...empty.profile, ...(parsed.profile || {}) },
       draft: { ...empty.draft, ...(parsed.draft || {}) },
       sentLetters: parsed.sentLetters || [],
+      removedIds: parsed.removedIds || [],
+      acceptedIds: parsed.acceptedIds || [],
+      declinedIds: parsed.declinedIds || [],
+      invited: parsed.invited || [],
     }
   } catch {
     return structuredClone(empty)
